@@ -1,0 +1,26 @@
+debug = true
+logLevel = "DEBUG"
+
+defaultEntryPoints = ["http", "https"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  compress = true
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      certFile = "/etc/traefik/selfsigned.crt"
+      keyFile = "/etc/traefik/selfsigned.key"
+
+[traefikLog]
+
+[accessLog]
+
+[web]
+address = ":8080"
+
+[docker]
+domain = "docker.localhost"

@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  proxy:
+    image: traefik
+    command: traefik
+    networks:
+      - webgateway
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/etc/traefik
+
+  redirectwebapp:
+    build: ./
+    image: redirectwebapp
+    networks:
+      - webgateway
+    labels:
+      - "traefik.backend=redirectwebapp"
+      - "traefik.frontend.rule=Host:redirectwebapp.docker.localhost"
+
+networks:
+  webgateway:
+    driver: bridge
