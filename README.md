@@ -1,10 +1,27 @@
-## Setup
+## The Bug
+
+Make a HTTP2 request with `Accept-Encoding: gzip` to Traefik that should result
+in `302 Found` being returned.
+
+Result: `HTTP/2 200` is returned
+Expected: `HTTP/2 302` is returned
+
+The bug only appears when all of the following is true:
+* the client uses HTTP2
+* the client sends `Accept-Encoding: gzip`
+* Traefik has compression enabled
+
+### Reproduction
+#### Setup
+
+Boot up Traefik with a simple web app in the backend:
+
 ```
 docker-compose build
 docker-compose up
 ```
 
-## The Bug
+#### The Bug
 
 ```
 $ /usr/local/opt/curl/bin/curl -v -k --http2 -H 'Accept-Encoding: gzip' -H 'Host: redirectwebapp.docker.localhost' https://localhost/redirect
