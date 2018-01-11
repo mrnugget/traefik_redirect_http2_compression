@@ -1,0 +1,6 @@
+FROM scratch
+COPY traefik /
+EXPOSE 80
+EXPOSE 443
+EXPOSE 8080
+ENTRYPOINT ["/traefik"]

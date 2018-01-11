@@ -3,6 +3,14 @@ version: '2'
 services:
   proxy:
     image: traefik
+
+    # To use a custom-build traefik version, use this:
+    #
+    # image: traefik/dev
+    # build:
+    #   context: ./
+    #   dockerfile: Dockerfile.traefik.dev
+
     command: traefik
     networks:
       - webgateway
